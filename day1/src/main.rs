@@ -1,4 +1,3 @@
-use std::env;
 use std::fs;
 use std::fs::File;
 use std::io::{self, BufRead};
@@ -8,28 +7,32 @@ fn main() {
     let file_path = "sample_data_1.txt";
     println!("In file {}", file_path);
 
-    if let Ok(calories = read_lines("sample_data_1.txt") {
+    if let Ok(calories) = read_lines("sample_data_1.txt") {
         // Consumes the iterator, returns an (Optional) String
-        let mut elves = Vec::new();
-        let mut food = Vec::new();
-
+        let elves: Vec<String> = Vec::new();
+        let food: Vec<String> = Vec::new();
 
         for calorie in calories {
             if let Ok(ip) = calorie {
-                food.push(ip);
-                println!("{}", ip);
+                food.push(&mut ip);
+                // println!("{}", ip);
             } else {
-                elves.push(food);
+                let newfood = food.to_vec();
+                println!("{}", String::from_iter(newfood));
+                // elves.push(newfood);
             }
         }
-        println!("{}", std::str::from_utf8(elves));
-
+        for item in elves {
+            println!("{}", item)
+        // let s:String = String::from_iter(elves);
+        // println!("{}", s);
+        }
     }
 
-    let contents = fs::read_to_string(file_path)
+    let _contents = fs::read_to_string(file_path)
         .expect("Should have been able to read the file");
 
-    // println!("With text:\n{contents}");
+    // println!("With text:\n{_contents}");
 }
 
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
